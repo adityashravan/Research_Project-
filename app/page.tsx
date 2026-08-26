@@ -20,24 +20,18 @@ export default function Home() {
 
     // Subscribe to real-time updates
     const channel = supabase
-      .channel('mic_data_realtime')
+      .channel('sensor_data_realtime')
       .on(
         'postgres_changes',
         {
           event: 'INSERT',
           schema: 'public',
-          table: 'mic_data'
+          table: 'sensor_data'
         },
         (payload) => {
           console.log('Real-time update received:', payload);
           
-          const rawData = payload.new as any;
-          // Calculate heart rate from raw_value
-          const newData: SensorData = {
-            ...rawData,
-            created_at: rawData.timestamp,
-            heart_rate: rawData.raw_value ? Math.round(rawData.raw_value / 25) : null,
-          };
+          const newData = payload.new as SensorData;
           setCurrentData(newData);
           setHistoricalData((prev) => [newData, ...prev].slice(0, 100));
         }
@@ -56,9 +50,9 @@ export default function Home() {
     try {
       setIsLoading(true);
       const { data, error } = await supabase
-        .from('mic_data')
+        .from('sensor_data')
         .select('*')
-        .order('timestamp', { ascending: false })
+        .order('created_at', { ascending: false })
         .limit(100);
 
       if (error) {
@@ -67,14 +61,8 @@ export default function Home() {
       }
 
       if (data && data.length > 0) {
-        // Calculate heart rate from raw_value
-        const mappedData = data.map(item => ({
-          ...item,
-          created_at: item.timestamp,
-          heart_rate: item.raw_value ? Math.round(item.raw_value / 25) : null,
-        }));
-        setHistoricalData(mappedData);
-        setCurrentData(mappedData[0]);
+        setHistoricalData(data);
+        setCurrentData(data[0]);
       }
     } catch (error) {
       console.error('Error fetching data:', error);

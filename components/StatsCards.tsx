@@ -7,45 +7,42 @@ interface StatsCardsProps {
 }
 
 export default function StatsCards({ data }: StatsCardsProps) {
-  // Calculate heart rate from raw_value (you can adjust this formula based on your sensor)
-  const heartRate = data?.raw_value ? Math.round(data.raw_value / 25) : null;
-  
   const stats = [
     {
       label: 'Heart Rate',
-      value: heartRate !== null ? heartRate : '--',
+      value: data?.heart_rate !== undefined ? data.heart_rate : '--',
       unit: 'bpm',
       icon: Heart,
       color: 'text-red-500',
       bgColor: 'bg-red-50 dark:bg-red-900/20',
-      normal: heartRate !== null ? heartRate >= 60 && heartRate <= 100 : null,
+      normal: data?.heart_rate ? data.heart_rate >= 60 && data.heart_rate <= 100 : null,
     },
     {
-      label: 'Raw Sensor Value',
-      value: data?.raw_value !== undefined ? data.raw_value : '--',
-      unit: '',
+      label: 'ECG Value',
+      value: data?.ecg_value !== undefined ? data.ecg_value : '--',
+      unit: 'V',
       icon: Activity,
       color: 'text-indigo-500',
       bgColor: 'bg-indigo-50 dark:bg-indigo-900/20',
       normal: null,
     },
     {
-      label: 'Voltage',
-      value: data?.voltage !== undefined ? data.voltage.toFixed(6) : '--',
-      unit: 'V',
-      icon: Droplet,
-      color: 'text-amber-500',
-      bgColor: 'bg-amber-50 dark:bg-amber-900/20',
-      normal: null,
-    },
-    {
       label: 'SpO2',
-      value: '--',
+      value: data?.spo2 !== undefined ? data.spo2 : '--',
       unit: '%',
-      icon: Thermometer,
+      icon: Droplet,
       color: 'text-blue-500',
       bgColor: 'bg-blue-50 dark:bg-blue-900/20',
-      normal: null,
+      normal: data?.spo2 ? data.spo2 >= 95 : null,
+    },
+    {
+      label: 'Temperature',
+      value: data?.temperature !== undefined ? data.temperature : '--',
+      unit: '°C',
+      icon: Thermometer,
+      color: 'text-amber-500',
+      bgColor: 'bg-amber-50 dark:bg-amber-900/20',
+      normal: data?.temperature ? data.temperature >= 36.5 && data.temperature <= 37.5 : null,
     },
   ];
 

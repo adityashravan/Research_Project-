@@ -54,10 +54,16 @@ export default function HistoricalData({ data }: HistoricalDataProps) {
                 Heart Rate
               </th>
               <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                Raw Value
+                ECG
               </th>
               <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
-                Voltage
+                SpO2
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                Temp
+              </th>
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                BP
               </th>
               <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                 Risk Level
@@ -76,16 +82,22 @@ export default function HistoricalData({ data }: HistoricalDataProps) {
                     {record.id}
                   </td>
                   <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                    {formatDateTime(record.created_at || record.timestamp)}
+                    {formatDateTime(record.created_at)}
                   </td>
                   <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
                     {record.heart_rate || '--'} <span className="text-gray-500">bpm</span>
                   </td>
                   <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                    {record.raw_value !== undefined ? record.raw_value : '--'}
+                    {record.ecg_value !== undefined ? record.ecg_value : '--'} <span className="text-gray-500">V</span>
                   </td>
                   <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
-                    {record.voltage !== undefined ? record.voltage.toFixed(6) : '--'} <span className="text-gray-500">V</span>
+                    {record.spo2 !== undefined ? record.spo2 : '--'} <span className="text-gray-500">%</span>
+                  </td>
+                  <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                    {record.temperature !== undefined ? record.temperature : '--'} <span className="text-gray-500">°C</span>
+                  </td>
+                  <td className="px-4 py-3 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                    {record.blood_pressure_systolic && record.blood_pressure_diastolic ? `${record.blood_pressure_systolic}/${record.blood_pressure_diastolic}` : '--'}
                   </td>
                   <td className="px-4 py-3 whitespace-nowrap">
                     <span

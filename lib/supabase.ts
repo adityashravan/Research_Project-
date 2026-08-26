@@ -7,16 +7,13 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export interface SensorData {
   id: number;
-  timestamp: string;
-  raw_value: number;
-  voltage: number;
-  // Computed/derived fields for display
-  heart_rate?: number;
-  ecg_value?: number;
-  spo2?: number;
-  temperature?: number;
-  blood_pressure_systolic?: number;
-  blood_pressure_diastolic?: number;
+  created_at: string;
+  heart_rate: number;
+  ecg_value: number;
+  spo2: number;
+  temperature: number;
+  blood_pressure_systolic: number;
+  blood_pressure_diastolic: number;
   [key: string]: any;
 }
 
