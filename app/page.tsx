@@ -87,6 +87,24 @@ export default function Home() {
       <Header />
       
       <main className="container mx-auto px-4 py-8">
+        {currentData && (
+          <div className="card mb-6 flex items-center justify-between">
+            <div>
+              <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Currently monitoring</p>
+              <p className="text-2xl font-bold text-gray-800 dark:text-white">
+                {currentData.patient_name || `Demo Patient ${String((currentData.id % 4) + 1).padStart(3, '0')}`}
+              </p>
+              {currentData.patient_id && (
+                <p className="text-sm text-gray-500 dark:text-gray-400">{currentData.patient_id}</p>
+              )}
+            </div>
+            <div className="flex items-center gap-2 text-sm text-green-600">
+              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+              Live patient reading
+            </div>
+          </div>
+        )}
+
         {/* Stats Cards - Real Data + Calculated Heart Rate */}
         <StatsCards data={currentData} />
 

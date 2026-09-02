@@ -14,6 +14,8 @@ CREATE TABLE sensor_data (
   temperature DECIMAL,
   blood_pressure_systolic INTEGER,
   blood_pressure_diastolic INTEGER
+  ,patient_id TEXT
+  ,patient_name TEXT
 );
 
 -- Enable replication for real-time updates

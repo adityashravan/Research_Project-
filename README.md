@@ -92,6 +92,14 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
+### Live demo and doctors view
+
+After the original `sensor_data` table exists, run `supabase-patient-fields.sql` once in the Supabase SQL Editor. It adds `patient_id` and `patient_name` and backfills existing readings so the doctors view has populated history.
+
+For a clean demo dataset with realistic historical dates, run `supabase-demo-history.sql` after that migration. It resets demo data, so do not run it when the table contains real device or clinical data. The historical seed readings are spread across older dates; live simulator readings are always inserted as new current-time database rows.
+
+Open `/` for the live monitoring dashboard and `/doctor` for the unauthenticated doctors dashboard. In a second terminal, run `npm run demo:once` to send one live reading, or `npm run demo:live` to send a new reading every 10 seconds. The main dashboard displays the current patient name, and both pages subscribe to Supabase realtime INSERT events, so values update automatically.
+
 ## ESP32 Integration 📡
 
 Your ESP32 should send data to Supabase using the Supabase REST API. Here's a sample ESP32 code snippet:

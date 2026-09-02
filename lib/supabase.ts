@@ -14,6 +14,8 @@ export interface SensorData {
   temperature: number;
   blood_pressure_systolic: number;
   blood_pressure_diastolic: number;
+  patient_id?: string;
+  patient_name?: string;
   [key: string]: any;
 }
 

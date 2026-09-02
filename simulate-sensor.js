@@ -7,8 +7,15 @@ const supabase = createClient(
 );
 
 // Generate realistic random sensor data
+const patients = [
+    ['DEMO-001', 'Aarav Sharma'], ['DEMO-002', 'Diya Patel'],
+    ['DEMO-003', 'Kabir Rao'], ['DEMO-004', 'Meera Nair']
+];
+
 function generateRandomData() {
+  const patient = patients[Math.floor(Math.random() * patients.length)];
   return {
+    patient_id: patient[0], patient_name: patient[1],
     heart_rate: Math.floor(Math.random() * (100 - 60) + 60), // 60-100 bpm
     ecg_value: parseFloat((Math.random() * 0.5 + 0.7).toFixed(2)), // 0.7-1.2 V
     spo2: Math.floor(Math.random() * (100 - 94) + 94), // 94-100%
@@ -51,10 +58,10 @@ async function runContinuously() {
   // Insert first data immediately
   await insertData();
   
-  // Then insert every 3 seconds
+  // Then insert every 10 seconds
   setInterval(async () => {
     await insertData();
-  }, 3000);
+  }, 10000);
 }
 
 async function runOnce() {
